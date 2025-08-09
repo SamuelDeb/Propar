@@ -1,0 +1,24 @@
+.carousel-inner {
+    max-height: 800px;
+}
+
+.form{
+    border: solid 1px blue;
+    border-radius: 5px;
+}
+
+.divCarousel {
+    height: 100%;
+    padding: 0px;
+}
+    .carousel-inner {
+        height: 100%;
+    }
+        .carousel-item {
+            height: 100%;
+        }
+    
+
+    .carousel-item img {
+        height: 100%;
+    }

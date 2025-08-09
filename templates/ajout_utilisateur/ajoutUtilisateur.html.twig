@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Utilisateur
+{% endblock %}
+
+{% block body %}
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+
+	{% endfor %}
+
+	{% for message in app.flashes('erreur') %}
+		<div class="alert alert-warning">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	<div class="bg-white p-5 contact-form">
+		<div class="form-group">
+			{{ form_start(form) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(form.nom, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(form.prenom, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(form.identifiant, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_row(form.password, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<label for="role">ROLE</label>
+
+		<select name="role" id="role" class="form-control">
+			<option value="">--Choix du Rôle--</option>
+			<option value="ROLE_EXPERT">"ROLE_EXPERT"</option>
+			<option value="ROLE_SENIOR">"ROLE_SENIOR"</option>
+			<option value="ROLE_APPRENTI">"ROLE_APPRENTI"</option>
+
+		</select>
+		<div class="form-group">
+			<input type="submit" value="Ajouter l'utilisateur" class="btn btn-primary py-3 px-5">
+		</div>
+		{{ form_end(form) }}
+	{% endblock %}

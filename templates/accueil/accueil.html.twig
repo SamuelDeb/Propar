@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block title %}PROPAR
+{% endblock %}
+
+{% block body %}
+<div id="m-booked-bl-simple-41642" style="margin-right:90%; > 
+<div class="booked-wzs-160-110 weather-customize" style="background-color:#137AE9;width:160px;" id="width1"> <div class="booked-wzs-160-110_in"> <div class="booked-wzs-160-data"> <div class="booked-wzs-160-left-img wrz-06"></div> <div class="booked-wzs-160-right"> <div class="booked-wzs-day-deck"> <div class="booked-wzs-day-val"> <div class="booked-wzs-day-number"><span class="plus">+</span>30</div> <div class="booked-wzs-day-dergee"> <div class="booked-wzs-day-dergee-val">&deg;</div> <div class="booked-wzs-day-dergee-name">C</div> </div> </div> <div class="booked-wzs-day"> <div class="booked-wzs-day-d"><span class="plus">+</span>33&deg;</div> <div class="booked-wzs-day-n"><span class="plus">+</span>19&deg;</div> </div> </div> <div class="booked-wzs-160-info"> <div class="booked-wzs-160-city">roubaix</div> <div class="booked-wzs-160-date">Dimanche, 24</div> </div> </div> </div> <div class="booked-wzs-center"><span class="booked-wzs-bottom-l"> Prévisions sur 7 jours</span></div> </div> </div> </div><script type="text/javascript"> var css_file=document.createElement("link"); var widgetUrl = location.href; css_file.setAttribute("rel","stylesheet"); css_file.setAttribute("type","text/css"); css_file.setAttribute("href",'https://s.bookcdn.com/css/w/booked-wzs-widget-160.css?v=0.0.1'); document.getElementsByTagName("head")[0].appendChild(css_file); function setWidgetData_41642(data) { if(typeof(data) != 'undefined' && data.results.length > 0) { for(var i = 0; i < data.results.length; ++i) { var objMainBlock = document.getElementById('m-booked-bl-simple-41642'); if(objMainBlock !== null) { var copyBlock = document.getElementById('m-bookew-weather-copy-'+data.results[i].widget_type); objMainBlock.innerHTML = data.results[i].html_code; if(copyBlock !== null) objMainBlock.appendChild(copyBlock); } } } else { alert('data=undefined||data.results is empty'); } } var widgetSrc = "https://widgets.booked.net/weather/info?action=get_weather_info;ver=7;cityID=18145;type=1;scode=2;ltid=3457;domid=581;anc_id=66706;countday=undefined;cmetric=1;wlangID=3;color=137AE9;wwidth=160;header_color=ffffff;text_color=333333;link_color=08488D;border_form=1;footer_color=ffffff;footer_text_color=333333;transparent=0;v=0.0.1";widgetSrc += ';ref=' + widgetUrl;widgetSrc += ';rand_id=41642';var weatherBookedScript = document.createElement("script"); weatherBookedScript.setAttribute("type", "text/javascript"); weatherBookedScript.src = widgetSrc; document.body.appendChild(weatherBookedScript) </script><!-- weather widget end -->
+	<h1>
+		Opérations en cours</h1>
+<div class="d-flex align-items-start">
+
+		{% for ope in operation %}
+			{% if ope.IsActive == true %}
+
+
+						<div class="card shadow m-3 col-md-12 col-lg-4 col-xl-3">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">
+						Client :
+						{{ope.user}}</h6>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Description:
+					</h5>
+					<p class="card-text">{{ope.description}}</p>
+					<p class="card-text">type:
+						{{ope.type}}</p>
+				<img src="assets/images/{{ope.image}}">
+				</div>
+				<div class="card-footer text-light bg-dark">Fait par :
+					{{ope.user}}
+				</div>
+
+			</div>
+			
+			{% endif %}
+		{% endfor %}
+	</div>
+</div></div></div>
+
+<h1>Opérations terminées</h1>
+<div class="d-flex align-items-start">
+
+		{% for ope in operation %}
+			{% if ope.IsActive == false %}
+
+
+						<div class="card shadow m-3 col-md-12 col-lg-4 col-xl-3">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">
+						Client :
+						{{ope.user}}</h6>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Description:
+					</h5>
+					<p class="card-text">{{ope.description}}</p>
+					<p class="card-text">type:
+						{{ope.type}}</p>
+				<img src="assets/images/{{ope.image}}">
+				</div>
+				<div class="card-footer text-light bg-dark">Fait par :
+					{{ope.user}}
+				</div>
+
+			</div>
+			
+			{% endif %}
+		{% endfor %}
+	</div>
+</div></div></div><div id="carouselExampleSlidesOnly" class="carousel slide w-75  mx-auto " style="margin-left:20%; margin-top:2%;" data-bs-ride="carousel"><div class="carousel-inner" style="margin-left:13%; margin-bottom:5%">
+<div class="carousel-item active w-75">
+	<img src="{{ asset('assets/images/images_source/img1.jpg') }}" class="d-block w-100" alt="...">
+</div>
+<div class="carousel-item w-75 ">
+	<img src="{{ asset('assets/images/images_source/img3.jpg') }}" class="d-block w-100" alt="...">
+</div></div></div>{% endblock %}

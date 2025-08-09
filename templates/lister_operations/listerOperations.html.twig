@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de vos opérations
+{% endblock %}
+
+{% block body %}
+
+	<h2>Liste de vos opérations :
+		{{app.user.prenom}}.</h2>
+	<h1>Opérations en cours</h1>
+	<div class="d-flex align-items-start">
+
+		{% if app.user %}
+			{% for ope in operation %}
+				{% if ope.IsActive == true %}
+					{% if ope.user == app.user %}
+<div class="card shadow m-3 col-md-12 col-lg-4 col-xl-3">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">
+						Client :
+						{{ope.user}}</h6>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Description:
+					</h5>
+					<p class="card-text">{{ope.description}}</p>
+					<p class="card-text">type:
+						{{ope.type}}</p>
+				<img src="assets/images/{{ope.image}}">
+				</div>
+				<div class="card-footer text-light bg-dark">Fait par :
+					{{ope.user}}
+				</div>
+			<a class="btn btn-error my-2 my-sm-0" href="{{path('terminerOperation' , { 'id' : ope.id })}}" type="submit"><img src="{{ asset('assets/images/images_source/task-7.svg')}}" alt="terminer opération" width="50px">Terminer l'opération</a>
+			</div>
+
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+</div></div><h1>
+Opérations terminées</h1>{% if app.user %}
+
+{% for ope in operation %}
+	{% if ope.IsActive == false %}
+		{% if ope.user == app.user %}
+			<div class="card shadow m-3 col-md-12 col-lg-4 col-xl-3">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">
+						Client :
+						{{ope.user}}</h6>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Description:
+					</h5>
+					<p class="card-text">{{ope.description}}</p>
+					<p class="card-text">type:
+						{{ope.type}}</p>
+				<img src="assets/images/{{ope.image}}">
+				</div>
+				<div class="card-footer text-light bg-dark">Fait par :
+					{{ope.user}}
+				</div>
+
+			</div>
+		{% endif %}
+	{% endif %}
+{% endfor %}{% endif %}{% endblock %}

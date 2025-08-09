@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Ajout Opération{% endblock %}
+
+{% block body %}
+
+ <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+</head>
+<body>
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+                {{ message }}
+            </div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+    <div class="alert alert-warning">
+                {{ message }}
+            </div>
+  
+{% endfor %}
+{% if app.user %}
+<div class="bg-white p-5 contact-form" style="margin-left:30%; margin-right:30%;margin-top:5%; margin-bottom:15%">
+    <div class="form-group">
+{{ form_start(form) }}
+    {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.prix, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.nom, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.prenom, {'attr': {'class': 'form-control'}}) }}
+</div>
+     <label for="adresse" class="control-label">Adresse</label>
+          <input type="text" class="form-control" id="adresse" name="adresse" autocomplete="off" data-toggle="tooltip" data-placement="top" title="" />
+          <div class="address-feedback" style="z-index:1100;">
+      </div>
+   
+        <div class="form-group">
+                  <div class="form-row">
+        <div class="form-group col-sm-3">
+          <label for="cp" class="control-label">Code Postal</label>
+          <input type="text" class="form-control" id="cp" name="cp" />
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="ville">Ville</label>
+          <input type="text" class="form-control" id="ville" name="ville" required />
+        </div>
+    {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.image, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+  <div class="form-group col-sm-6">
+          <label for="user">Utilisateur</label>
+          <input type="text" class="form-control" id="user" name="user" value={{app.user.nom}} required />
+        </div>
+</div>
+<div class="form-group">
+    <input type="submit" value="Ajouter l'opération" class="btn btn-primary py-3 px-5 ">
+</div>
+{{ form_end(form) }}
+</div>
+</div>
+          </div>
+        </div>
+
+</body>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+
+ var currentFocus = -1;
+var fetchTrigger = 0;
+
+function setActive() {
+  var nbVal = $("div.address-feedback a").length;
+
+  if (!nbVal)
+    return false;
+
+  $('div.address-feedback a').removeClass("active");
+
+  currentFocus = ((currentFocus + nbVal - 1) % nbVal) + 1;
+
+  $('div.address-feedback a:nth-child(' + currentFocus + ')').addClass("active");
+}
+
+
+$('div.address-feedback').on("mousedown", "a", function(event) {
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  $("#adresse").val($(this).attr("data-name"));
+  $("#cp").val($(this).attr("data-postcode"));
+  $("#ville").val($(this).attr("data-city"));
+
+  $('.address-feedback').empty();
+});
+
+
+$("#adresse").keyup(function(event) {
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (event.keyCode === 38) { 
+    currentFocus--;
+    setActive();
+    return false;
+  } else if (event.keyCode === 40) { 
+    currentFocus++;
+    setActive();
+    return false;
+  } else if (event.keyCode === 13) { 
+    if (currentFocus > 0) {
+    
+      $("div.address-feedback a:nth-child(" + currentFocus + ")").mousedown();
+    }
+    return false;
+  }
+
+
+  $('div.address-feedback a').removeClass("active");
+  currentFocus = 0;
+
+ 
+  clearTimeout(fetchTrigger);
+
+
+  let rue = $("#adresse").val();
+  if (rue.length === 0) {
+    $('.address-feedback').empty();
+    return false;
+  }
+
+
+  fetchTrigger = setTimeout(function() {
+
+    $.get('https://api-adresse.data.gouv.fr/search/', {
+      q: rue,
+      limit: 15,
+      autocomplete: 1
+    }, function(data, status, xhr) {
+      let liste = "";
+      $.each(data.features, function(i, obj) {
+      
+        let cooladdress = obj.properties.name + " " + obj.properties.postcode + " <strong>" + obj.properties.city + "</strong>";
+        liste += '<a class="list-group-item list-group-item-action py-1" href="#" name="' + obj.properties.label + '" data-name="' + obj.properties.name + '" data-postcode="' + obj.properties.postcode + '" data-city="' + obj.properties.city + '">' + cooladdress + '</a>';
+      });
+      $('.address-feedback').html(liste);
+    }, 'json');
+  }, 500);
+});
+
+
+$("#adresse").focusout(function() {
+  $('.address-feedback').empty();
+});
+
+$("#adresse").keydown(function(e) {
+  if ($("div.address-feedback a").length > 0 && (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13)) {
+    e.preventDefault();
+  }
+});
+
+</script>
+
+{% endblock %}
