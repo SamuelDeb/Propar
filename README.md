@@ -3,7 +3,7 @@
 **Propar** est une application de gestion de travaux de nettoyage permettant de planifier, suivre et répartir les tâches entre différents employés.  
 Elle propose un **back-office** pour l’administration et un **front-office** pour la visualisation des tâches.
 
-![image](propar_screen/propar3.png)
+![image](propar_screen/propar3.jpg)
 
 ---
 
@@ -64,8 +64,8 @@ symfony serve
 
 ![image](propar_screen/propar1.png)
 ![image](propar_screen/propar2.png)
-![image](propar_screen/propar4.png)
-![image](propar_screen/propar5.png)
-![image](propar_screen/propar6.png)
-![image](propar_screen/propar7.png)
+![image](propar_screen/propar4.jpg)
+![image](propar_screen/propar5.jpg)
+![image](propar_screen/propar6.jpg)
+![image](propar_screen/propar7.jpg)
 
